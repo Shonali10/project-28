@@ -30,8 +30,8 @@ function setup() {
 
 	treeObj=new tree(1050,580);
 	groundObject=new ground (width/2,600,width,20);
-	stoneObject = new stone(240,420,10)
-	sling= new Slingshot(stoneObject.body,{x:240,y:430})
+	stoneObject = new stone(235,420,10)
+	sling= new Slingshot(stoneObject.body,{x:235,y:430})
 	
 	Engine.run(engine);
 
@@ -43,6 +43,13 @@ function draw() {
   //Add code for displaying text here!
   image(boy ,200,340,200,300);
   
+  detectcollision(stoneObject,mango1) ;
+  detectcollision(stoneObject,mango2) ;
+  detectcollision(stoneObject,mango3) ;
+  detectcollision(stoneObject,mango4) ;
+  detectcollision(stoneObject,mango5) ;
+  detectcollision(stoneObject,mango6) ;
+  detectcollision(stoneObject,mango7);
 
   treeObj.display();
   mango1.display();
@@ -65,4 +72,19 @@ function mouseDragged(){
 	function mouseReleased(){
 	   sling.fly();
 		
+		}
+		function detectcollision(lstone,lmango){
+			mangoBodyPosition = lmango.body.position
+			stoneBodyPosition = lstone.body.position
+
+			var distance  = dist(stoneBodyPosition.x , stoneBodyPosition.y, mangoBodyPosition.x,mangoBodyPosition.y)
+			if(distance <= lmango.r + lstone.r){
+				Matter.Body.setStatic(lmango.body,false);
+			}
+		}
+		function keyPressed(){
+			if (keyCode === 32){
+				Matter.Body.setPosition(stoneObject.body , {x:235,y:420})
+				sling.attach(stoneObject.body)
+			}
 		}
